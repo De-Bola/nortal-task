@@ -14,11 +14,9 @@ public class You {
     private List<Position> targetsToCapture;
 
     public VoiceCommand getNextStep(Clark clark, CityMap cityMap) {
-        VoiceCommand voiceCommand = new VoiceCommand(Direction.SOUTH, SpeedLevel.L0_RUNNING_HUMAN);
-
-        // TODO: Implement algorithm to return command to Clark to capture all the targets on the city map provided
+        VoiceCommand voiceCommand = new VoiceCommand(Direction.NORTH, SpeedLevel.L1_TRAIN);
+        
         //<<SOLUTION START>>
-
         if (targetsToCapture == null) {
             targetsToCapture = cityMap.getTargets();
         }
@@ -39,10 +37,10 @@ public class You {
 
         } else if (targetToCapture.x > clark.getPosition().x) {
             voiceCommand = new VoiceCommand(Direction.EAST, horizontalSpeedLevel);
-        } else if (targetToCapture.y > clark.getPosition().y) {
-            voiceCommand = new VoiceCommand(Direction.NORTH, verticalSpeedLevel);
         } else if (targetToCapture.x < clark.getPosition().x) {
             voiceCommand = new VoiceCommand(Direction.WEST, horizontalSpeedLevel);
+        } else if (targetToCapture.y > clark.getPosition().y) {
+            voiceCommand = new VoiceCommand(Direction.NORTH, verticalSpeedLevel);
         } else if (targetToCapture.y < clark.getPosition().y) {
             voiceCommand = new VoiceCommand(Direction.SOUTH, verticalSpeedLevel);
         }
@@ -54,12 +52,12 @@ public class You {
 
     //<<SOLUTION START>>
     private SpeedLevel thinkOfSpeedLevel(int distanceDiff, double speed) {
-        if (distanceDiff > 50)
-            return SpeedLevel.L2_SUB_SONIC;
-        if (distanceDiff > 20)
+        if (distanceDiff > 50 && ((int) speed < SpeedLevel.L4_MACH_9350.getAcceleration()))
+            return SpeedLevel.L4_MACH_9350;
+        if (distanceDiff > 20 && ((int) speed < SpeedLevel.L3_SUPER_SONIC.getAcceleration()))
             return SpeedLevel.L3_SUPER_SONIC;
 
-        return SpeedLevel.L4_MACH_9350;
+        return SpeedLevel.L2_SUB_SONIC;
     }
     //<<SOLUTION END>>
 }
