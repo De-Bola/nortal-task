@@ -1,2 +1,2 @@
 # nortal-task
-this repo includes the Java test task and the Angular test task solutions.
+this repo includes the Java test task [unsolved] and the Angular test task solutions.
