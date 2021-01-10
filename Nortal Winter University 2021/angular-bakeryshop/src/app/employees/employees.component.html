@@ -1,0 +1,63 @@
+<div class="container">
+  <h2 class="mb-4">Employees</h2>
+  <table class="table table-hover table-bordered table-sortable">
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col" class="img-responsive">Avatar</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let employee of employees; let i = index">
+          <td>{{employee.id}}</td>
+          <td>{{employee.name}}</td>
+          <td>{{employee.email}}</td>
+          <img src="{{employee.avatar}}" style="width: fit-content;">
+          <td><button type="button" class="btn btn-danger" (click)="deleteEmployee(i)">Delete</button></td>
+    </tr>
+    <tr class="input-row" [formGroup]="form">
+      <td><input formControlName="id" type="text" placeholder="ID" class="form-control" required>
+            <div *ngIf="id.invalid && (id.dirty || id.touched)" class="alert alert-danger">
+              <div *ngIf="id.errors?.required">
+                ID is required!
+              </div>
+              <div *ngIf="id.errors?.pattern">
+                Only numbers allowed!!
+              </div>
+            </div>
+      </td>
+      <td><input formControlName="name" type="text" placeholder="Name" class="form-control" required>
+        <div class="alert alert-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
+          <div *ngIf="name.errors?.required">
+            A name is required!
+          </div>
+          <div *ngIf="name.errors?.pattern">
+            A valid name cannot contain numbers!!
+          </div>
+        </div>
+      </td>
+      <td><input formControlName="email" type="text" placeholder="Email" class="form-control" required email>
+        <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+          <div *ngIf="email.errors?.required">
+            A valid email is needed!
+          </div>
+          <div *ngIf="email.errors?.pattern">
+              Please include the @ sign!
+            </div>
+        </div>
+      </td>
+      <td><input formControlName="avatar" type="text" placeholder="Image link" class="form-control" required>
+        <div class="alert alert-danger" *ngIf="avatar.invalid && (avatar.dirty || avatar.touched)">
+          <div *ngIf="avatar.errors?.required">
+            Please provide an active link to your avatar!
+          </div>
+        </div>
+      </td>
+      <td><button type="submit" class="btn btn-success" style="width: 70px" (click)="addEmployee()">Add</button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
